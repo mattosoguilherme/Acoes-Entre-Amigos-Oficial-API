@@ -2,6 +2,12 @@
 /dist
 /node_modules
 
+#Dotenv
+.env
+
+#vscode
+/.vscode
+
 # Logs
 logs
 *.log

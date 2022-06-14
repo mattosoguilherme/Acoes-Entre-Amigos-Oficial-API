@@ -7,6 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
+import { UpdateUserDto } from 'src/user/dto/update-user.dto';
+import { UpdatePassDto } from 'src/user/dto/update-pass.dto';
 
 @Injectable()
 export class AeaService {
@@ -23,6 +25,18 @@ export class AeaService {
     return n.replace(/,/g, ' ');
   }
 
+  async compare(pass: string, id: string) {
+    const { password } = await this.prisma.user.findUnique({
+      where: { id: id },
+    });
+
+    const hashValidated = await bcrypt.compare(pass, password);
+
+    if (!hashValidated) {
+      throw new ConflictException('Senha atual está incorreta.');
+    }
+  }
+
   async email_valid(email: string): Promise<User> {
     const emailFinded = await this.prisma.user.findUnique({
       where: {
@@ -35,6 +49,17 @@ export class AeaService {
     }
 
     return emailFinded;
+  }
+
+  async find_user_by_id(id: string): Promise<User> {
+    const userFinded = await this.prisma.user.findUnique({
+      where: { id: id },
+    });
+
+    if (!userFinded) {
+      throw new NotFoundException(' Id não existe. Usuário não encontrado. ');
+    }
+    return userFinded;
   }
 
   async fields_validator({
@@ -59,5 +84,46 @@ export class AeaService {
       email: email,
       contact: contact,
     };
+  }
+
+  async updated_fields_validator({
+    name,
+    email,
+    contact,
+  }: UpdateUserDto): Promise<User> {
+    const user: User = {
+      id: '',
+      password: '',
+      name: name,
+      email: email,
+      contact: contact,
+    };
+
+    if (name) {
+      user.name = this.titleize(name);
+    }
+
+    if (email) {
+      await this.email_valid(email);
+    }
+
+    return user;
+  }
+
+  async new_credentials_validator(
+    { actualPass, newPass, newPassConfirmation }: UpdatePassDto,
+    idUser: string,
+  ): Promise<string> {
+    const { id } = await this.find_user_by_id(idUser);
+
+    await this.compare(actualPass, id);
+
+    if (newPass !== newPassConfirmation) {
+      throw new ConflictException(
+        'Nova senha está divergente da senha de confirmação',
+      );
+    }
+
+    return await bcrypt.hash(newPass, 10);
   }
 }

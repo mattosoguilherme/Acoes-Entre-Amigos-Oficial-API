@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, Length, MinLength } from 'class-validator';
 export class CreateUserDto {
   @IsString({
-    message: 'O tipo do campo name deve ser obrigatoriamente uma string ',
+    message: 'O campo name deve ser obrigatoriamente uma string ',
   })
   @IsNotEmpty({
-    message: 'Campo name é obrigatório',
+    message: 'Campo nome é obrigatório',
   })
   @ApiProperty({
     default: 'Guilherme Mattoso',
@@ -14,7 +14,7 @@ export class CreateUserDto {
   name: string;
 
   @IsString({
-    message: 'O tipo do campo email deve ser obrigatoriamente uma string ',
+    message: 'O campo email deve ser obrigatoriamente uma string ',
   })
   @IsNotEmpty({ 
     message: 'Campo email é obrigatório'
@@ -30,38 +30,38 @@ export class CreateUserDto {
     message: 'O tipo do campo password deve ser obrigatoriamente uma string ',
   })
   @IsNotEmpty({
-    message: 'Campo password é obrigatório',
+    message: 'Campo senha é obrigatório',
   })
   @ApiProperty({
     default: '******',
     description: 'senha do usuário',
   })
-  @MinLength(6)
+  @MinLength(6,{message:" O mínimo de caracteres exigidos nos campos de senha são 6. Ex: 123456 "})
   password: string;
 
   @IsString({
-    message: 'O tipo do campo password deve ser obrigatoriamente uma string ',
+    message: 'O campo password deve ser obrigatoriamente uma string ',
   })
   @IsNotEmpty({
-    message: 'Campo password é obrigatório',
+    message: 'Campo senha é obrigatório',
   })
   @ApiProperty({
     default: '******',
     description: 'senha de confirmação do usuário',
   })
-  @MinLength(6)
+  @MinLength(6,{message:" O mínimo de caracteres exigidos nos campos de senha são 6. Ex: 123456 "})
   confirmationPass:string;
 
   @IsString({
-    message: 'O tipo do campo contact deve ser obrigatoriamente uma string ',
+    message: 'O campo contact deve ser obrigatoriamente uma string ',
   })
   @IsNotEmpty({
-    message: 'Campo contact é obrigatório',
+    message: 'Campo de contato é obrigatório',
   })
   @ApiProperty({
     default: '11992767398',
-    description: 'nome do usuário',
+    description: 'telefone do usuário',
   })
-  @Length(11,11)
+  @Length(11,11,{message:"O campo de contato, deve ter 11 caracteres. Ex: (XX) XXXXX-XXXX"})
   contact: string;
 }

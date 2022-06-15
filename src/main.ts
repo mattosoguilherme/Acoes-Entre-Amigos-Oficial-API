@@ -21,10 +21,10 @@ async function bootstrap() {
 
     const document = SwaggerModule.createDocument(app, config)
 
-    SwaggerModule.setup('aEa', app, document)
+    SwaggerModule.setup('api', app, document)
     const porta = 3000;
   await app.listen( process.env.PORT || porta, () => {
-    console.log(` Aplicação rodando neste endereço: http://localhost:${porta}/aEa ` );
+    console.log(` Aplicação rodando neste endereço: http://localhost:${porta}/api ` );
     
   });
 }

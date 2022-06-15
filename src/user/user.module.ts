@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule} from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
@@ -11,38 +11,46 @@ import { Queue } from 'bull';
 import { MiddlewareBuilder } from '@nestjs/core';
 import { createBullBoard } from 'bull-board';
 import { BullAdapter } from 'bull-board/bullAdapter';
+import { SendMailConsumer } from './job/sendMail.consumer';
+import { SendMailProducerService } from './job/sendMailProducer.service';
 @Module({
-  imports:[
+  imports: [
     BullModule.registerQueue({
-      name:"sendMail-queue"
+      name: 'sendMail-queue',
     }),
     BullModule.forRoot({
-      redis:{
-        name: process.env.REDIS_USER,
-        password:process.env.REDIS_PASS,
-        host:process.env.REDIS_HOST,
-        port:Number(process.env.REDIS_PORT)
-      }
+      redis: {
+        // name: process.env.REDIS_USER,
+        // password: process.env.REDIS_PASS,
+        host: 'localhost' || process.env.REDIS_HOST,
+        port: 6379 || Number(process.env.REDIS_PORT),
+      },
     }),
     ConfigModule.forRoot(),
     MailerModule.forRoot({
       transport: {
-        host: process.env.MAIL_HOST,
-        secure: false,
-        port: Number(process.env.MATL_PORT),
+      //  host: "smtp.gmail.com ",
+        service:"gmail",
+        secure: true,
+        port: 465 || Number(process.env.MATL_PORT),
         tls: {
           rejectUnauthorized: false,
         },
         auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
+          user: "equipe.develop@gmail.com", 
+          pass: "@suporte2022" ,
         },
       },
-    })
-  
+    }),
   ],
   controllers: [UserController],
-  providers: [UserService,PrismaService, AeaService]
+  providers: [
+    UserService,
+    PrismaService,
+    AeaService,
+    SendMailConsumer,
+    SendMailProducerService,
+  ],
 })
 export class UserModule {
   constructor(@InjectQueue('sendMail-queue') private sendMailQueue: Queue) {}

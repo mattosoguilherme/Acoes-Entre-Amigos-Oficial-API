@@ -3,14 +3,16 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { SendMailProducerService } from './job/sendMailProducer.service';
 
 @Controller('user')
 @ApiTags("user")
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private sendMailService: SendMailProducerService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
+    await this.sendMailService.sendMail(createUserDto);
     return this.userService.create(createUserDto);
   }
 

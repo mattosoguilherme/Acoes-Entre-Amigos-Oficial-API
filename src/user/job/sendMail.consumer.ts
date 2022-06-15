@@ -1,5 +1,11 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { OnQueueActive, OnQueueCompleted, OnQueueProgress, Process, Processor } from '@nestjs/bull';
+import {
+  OnQueueActive,
+  OnQueueCompleted,
+  OnQueueProgress,
+  Process,
+  Processor,
+} from '@nestjs/bull';
 import { Job } from 'bull';
 import { CreateUserDto } from '../dto/create-user.dto';
 
@@ -62,8 +68,8 @@ export class SendMailConsumer {
   }
 
   @OnQueueProgress()
-    OnProgress(job: Job) {
-          try {
+  OnProgress(job: Job) {
+    try {
       console.log(`
    Email em progresso.
    Etapa: ${job.name}
@@ -96,29 +102,29 @@ export class SendMailConsumer {
         
         `);
     }
-    }
-  
-    @OnQueueActive()
-    OnActive(job: Job) {
-        try {
-            console.log(`
+  }
+
+  @OnQueueActive()
+  OnActive(job: Job) {
+    try {
+      console.log(`
          Email em fila.
          Etapa: ${job.name}
          `);
-      
-            console.log(' *-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-**-');
-      
-            console.log(`
+
+      console.log(' *-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-**-');
+
+      console.log(`
          
           Relatório completo: 
               ${job.data}
       
              
          `);
-      
-            console.log(' *-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-**-');
-      
-            console.log(`
+
+      console.log(' *-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-**-');
+
+      console.log(`
          minha curiosidade
       
          
@@ -126,12 +132,12 @@ export class SendMailConsumer {
          
          
          `);
-          } catch {
-            console.log(`
+    } catch {
+      console.log(`
               Deu ruim:
               ${job}
               
               `);
-          }
     }
+  }
 }

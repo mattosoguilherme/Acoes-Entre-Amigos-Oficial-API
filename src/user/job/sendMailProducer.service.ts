@@ -4,8 +4,8 @@ import { Queue } from 'bull';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
-export class SendEmailProducerService {
-  constructor(@InjectQueue('sendEmail-job') private queue: Queue) {}
+export class SendMailProducerService {
+  constructor(@InjectQueue('sendMail-queue') private queue: Queue) {}
 
   async sendMail(user: CreateUserDto) {
     await this.queue.add('sendMail-job', user);

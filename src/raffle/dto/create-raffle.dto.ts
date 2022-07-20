@@ -6,6 +6,7 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   IsUrl,
@@ -104,7 +105,7 @@ export class CreateRaffleDto {
   img_premio: string;
 
   @ApiProperty({
-    default: 'whatsapp',
+    default: 'https://chat.whatsapp.com/Lqs84miW9xgCTQvUeHGoYN',
     description:
       'Este campo deverá ser preenchido com uma imagem do prêmio ou folder desenvolvido pela nossa equipe',
   })
@@ -127,7 +128,7 @@ export class CreateRaffleDto {
     description:
       'Este campo deverá ser preenchido com um ID de um tipo pré cadastrado no sistema',
   })
-  @IsArray()
+  @IsNumber()
   @IsNotEmpty()
   Tipo_exibicao: number;
 
@@ -153,8 +154,8 @@ export class CreateRaffleDto {
     description:
       'Este campo deverá ser preenchido com as promoções de compra, se houver',
   })
-  @IsArray()
+  @IsObject()
   @IsNotEmpty()
   @IsOptional()
-  promocoes: object[];
+  promocoes: object;
 }

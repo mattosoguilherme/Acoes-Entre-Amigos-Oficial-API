@@ -38,7 +38,7 @@ model Raffle {
   Tipos_exibicao     TypeDisplay[]
   Requisitos_reserva BookingRequeriements[]
   premios            String[]
-  promocoes          Json[]
+  promocoes          Json
 
   @@map("raffles")
 }
@@ -53,7 +53,7 @@ model Category {
 
 model Quota {
   id                Int     @id @default(autoincrement())
-  cota              BigInt
+  cota              Int
   comprador         String?
   contato_comprador String?
   email_comprador   String?
@@ -86,4 +86,3 @@ model BookingRequeriements {
 
   @@map("bookingRequirements")
 }
-

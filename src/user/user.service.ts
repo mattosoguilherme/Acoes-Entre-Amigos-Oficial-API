@@ -94,7 +94,7 @@ export class UserService {
             img_premio: true,
             link_grupo: true,
             limite_cota_user: true,
-            Locais: { select: { local: true } },
+            local:true,
             preco_cota: true,
             premios: true,
             promocoes: true,

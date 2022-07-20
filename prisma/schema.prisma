@@ -23,8 +23,8 @@ model Raffle {
   userId             String?
   id                 Int                    @id @default(autoincrement())
   titulo             String
-  Categoria          Category[]
-  local              RafflePlace[]
+  Categorias         Category[]
+  local              String
   prazo_expiracao    DateTime
   dia_sorteio        DateTime?
   Cotas              Quota[]
@@ -34,8 +34,8 @@ model Raffle {
   descricao          String
   img_premio         String
   link_grupo         String
-  Tipo_rifa          TypeRaffle[]
-  Tipo_exibicao      TypeDisplay[]
+  Tipos_rifa         TypeRaffle[]
+  Tipos_exibicao     TypeDisplay[]
   Requisitos_reserva BookingRequeriements[]
   premios            String[]
   promocoes          Json[]
@@ -44,53 +44,46 @@ model Raffle {
 }
 
 model Category {
-  id       Int      @id @default(autoincrement())
-  category String
-  Raffle   Raffle[]
+  id        Int      @id @default(autoincrement())
+  categoria String
+  Rifas     Raffle[]
 
   @@map("categories")
 }
 
 model Quota {
-  id            Int     @id @default(autoincrement())
-  quotas        BigInt
-  buyer         String?
-  contact_buyer String?
-  email_buyer   String?
-  Raffle        Raffle? @relation(fields: [raffleId], references: [id])
-  raffleId      Int?
+  id                Int     @id @default(autoincrement())
+  cota              BigInt
+  comprador         String?
+  contato_comprador String?
+  email_comprador   String?
+  Rifas             Raffle? @relation(fields: [rifaId], references: [id])
+  rifaId            Int?
 
   @@map("quotas")
 }
 
 model TypeRaffle {
-  id          Int      @id @default(autoincrement())
-  type_raffle String
-  Raffle      Raffle[]
+  id           Int      @id @default(autoincrement())
+  tipo_sorteio String
+  Rifas        Raffle[]
 
   @@map("typeRaffle")
 }
 
 model TypeDisplay {
-  id           Int      @id @default(autoincrement())
-  type_display String
-  Raffle       Raffle[]
+  id            Int      @id @default(autoincrement())
+  tipo_exibicao String
+  Rifas         Raffle[]
 
   @@map("typeDisplay")
 }
 
 model BookingRequeriements {
-  id                   Int      @id @default(autoincrement())
-  booking_requirements String
-  Raffle               Raffle[]
+  id                 Int      @id @default(autoincrement())
+  requisitos_reserva String
+  Rifas              Raffle[]
 
   @@map("bookingRequirements")
 }
 
-model RafflePlace {
-  id     Int      @id @default(autoincrement())
-  place  String
-  Raffle Raffle[]
-
-  @@map("rafflePlace")
-}

@@ -36,7 +36,7 @@ model Raffle {
   link_grupo         String
   Tipos_rifa         TypeRaffle[]
   Tipos_exibicao     TypeDisplay[]
-  Requisitos_reserva BookingRequeriements[]
+  Requisitos_reserva BookingRequirements[]
   premios            String[]
   promocoes          Json
 
@@ -79,7 +79,7 @@ model TypeDisplay {
   @@map("typeDisplay")
 }
 
-model BookingRequeriements {
+model BookingRequirements {
   id                 Int      @id @default(autoincrement())
   requisitos_reserva String
   Rifas              Raffle[]

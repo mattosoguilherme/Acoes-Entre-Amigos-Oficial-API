@@ -2,9 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsDateString,
-  IsJSON,
   IsNotEmpty,
-  IsNotEmptyObject,
   IsNumber,
   IsObject,
   IsOptional,
@@ -21,60 +19,10 @@ export class CreateRaffleDto {
   @IsNotEmpty()
   titulo: string;
 
-  @ApiProperty({
-    default: 1,
-    description:
-      ' Neste campo será inserida o ID de um categoria pré cadastrada no sistema',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  categoria: number;
-
   @ApiProperty({ default: 'Rua Tenente Manoel Alves dos Anjos' })
   @IsString()
   @IsNotEmpty()
   local: string;
-
-  @ApiProperty({
-    description: 'Este campo deverá ser preenchido com a data de encerramento',
-  })
-  @IsDateString()
-  @IsNotEmpty()
-  prazo_expiracao: Date;
-
-  @ApiProperty({
-    description: 'Este campo deverá ser preenchido com a data de sorteio',
-  })
-  @IsDateString()
-  @IsNotEmpty()
-  dia_sorteio: Date;
-
-  @ApiProperty({
-    default: 10,
-    description:
-      'Este campo deverá ser preenchido com a quantidade cotas(números)',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  cotas: number;
-
-  @ApiProperty({
-    default: 10.5,
-    description:
-      'Este campo deverá ser preenchido com preço individual das cotas(números)',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  preco_cota: number;
-
-  @ApiProperty({
-    default: 3,
-    description:
-      'Este campo deverá ser preenchido com o limite de cotas(números) por comprador(a)',
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  limite_cota_user: number;
 
   @ApiProperty({
     default: '11992767398',
@@ -115,6 +63,66 @@ export class CreateRaffleDto {
   link_grupo: string;
 
   @ApiProperty({
+    default: ['celular', 'moto', 'fogão'],
+    description: 'Este campo deverá ser preenchido com os prêmios',
+  })
+  @IsArray()
+  @IsNotEmpty()
+  premios: string[];
+
+  @ApiProperty({
+    default: 1,
+    description:
+      ' Neste campo será inserida o ID de um categoria pré cadastrada no sistema',
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  categoria: number;
+
+  @ApiProperty({
+    default: '2022-08-02T22:33:06.886Z',
+    description: 'Este campo deverá ser preenchido com a data de encerramento',
+  })
+  @IsDateString()
+  @IsNotEmpty()
+  prazo_expiracao: Date;
+
+  @ApiProperty({
+    default: '2022-08-02T22:33:06.886Z',
+    description: 'Este campo deverá ser preenchido com a data de sorteio',
+  })
+  @IsDateString()
+  @IsNotEmpty()
+  dia_sorteio: Date;
+
+  @ApiProperty({
+    default: 10,
+    description:
+      'Este campo deverá ser preenchido com a quantidade cotas(números)',
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  cotas: number;
+
+  @ApiProperty({
+    default: 10.5,
+    description:
+      'Este campo deverá ser preenchido com preço individual das cotas(números)',
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  preco_cota: number;
+
+  @ApiProperty({
+    default: 3,
+    description:
+      'Este campo deverá ser preenchido com o limite de cotas(números) por comprador(a)',
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  limite_cota_user: number;
+
+  @ApiProperty({
     default: 2,
     description:
       'Este campo deverá ser preenchido com um ID de um tipo pré cadastrado no sistema',
@@ -140,14 +148,6 @@ export class CreateRaffleDto {
   @IsArray()
   @IsNotEmpty()
   Requisitos_reserva: number[];
-
-  @ApiProperty({
-    default: ['celular', 'moto', 'fogão'],
-    description: 'Este campo deverá ser preenchido com os prêmios',
-  })
-  @IsArray()
-  @IsNotEmpty()
-  premios: string[];
 
   @ApiProperty({
     // default: { chave: 'valor', chave2: 'valor2' },

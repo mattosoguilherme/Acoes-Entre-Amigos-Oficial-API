@@ -6,7 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SendMailProducerService } from './job/sendMailProducer.service';
 
 @Controller('user')
-@ApiTags("user")
+@ApiTags("Usuário")
 export class UserController {
   constructor(private readonly userService: UserService, private sendMailService: SendMailProducerService) {}
 

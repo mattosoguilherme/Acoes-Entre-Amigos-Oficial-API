@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { TypeRaffle } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateTypeRaffleDto } from './dto/create-type-raffle.dto';
 import { UpdateTypeRaffleDto } from './dto/update-type-raffle.dto';
 
 @Injectable()
 export class TypeRaffleService {
-  create(createTypeRaffleDto: CreateTypeRaffleDto) {
-    return 'This action adds a new typeRaffle';
+  constructor(private prisma: PrismaService) {}
+
+  async create({ tipoRifa }: CreateTypeRaffleDto):Promise<TypeRaffle> {
+    return await this.prisma.typeRaffle.create({
+      data: {
+        tipo_sorteio: tipoRifa,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all typeRaffle`;
+  async update(id: number, { tipoRifa }: UpdateTypeRaffleDto):Promise<TypeRaffle> {
+    return await this.prisma.typeRaffle.update({
+      where: { id: id },
+      data: {
+        tipo_sorteio: tipoRifa,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} typeRaffle`;
-  }
-
-  update(id: number, updateTypeRaffleDto: UpdateTypeRaffleDto) {
-    return `This action updates a #${id} typeRaffle`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} typeRaffle`;
+  async remove(id: number):Promise<TypeRaffle> {
+    return await this.prisma.typeRaffle.delete({ where: { id: id } });
   }
 }

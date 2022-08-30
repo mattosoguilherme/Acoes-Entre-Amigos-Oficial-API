@@ -18,17 +18,10 @@ export class CategoryService {
     return createdCategory;
   }
 
-  async findAll(): Promise<Category[]> {
-    return this.prisma.category.findMany();
-  }
-
-  async findOne(id: number) {
-    return await this.prisma.category.findUnique({
-      where: { id: Number(id) },
-    });
-  }
-
-  async update(id: number, { categoria }: UpdateCategoryDto): Promise<Category> {
+  async update(
+    id: number,
+    { categoria }: UpdateCategoryDto,
+  ): Promise<Category> {
     return this.prisma.category.update({
       where: { id: Number(id) },
       data: {

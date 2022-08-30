@@ -12,23 +12,13 @@ export class TypeDisplayController {
     return this.typeDisplayService.create(createTypeDisplayDto);
   }
 
-  @Get()
-  findAll() {
-    return this.typeDisplayService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.typeDisplayService.findOne(+id);
-  }
-
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTypeDisplayDto: UpdateTypeDisplayDto) {
-    return this.typeDisplayService.update(+id, updateTypeDisplayDto);
+  update(@Param('id') id: number, @Body() updateTypeDisplayDto: UpdateTypeDisplayDto) {
+    return this.typeDisplayService.update(id, updateTypeDisplayDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.typeDisplayService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.typeDisplayService.remove(id);
   }
 }

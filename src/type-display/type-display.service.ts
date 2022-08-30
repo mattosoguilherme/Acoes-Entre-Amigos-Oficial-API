@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { TypeDisplay } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateTypeDisplayDto } from './dto/create-type-display.dto';
 import { UpdateTypeDisplayDto } from './dto/update-type-display.dto';
 
 @Injectable()
 export class TypeDisplayService {
-  create(createTypeDisplayDto: CreateTypeDisplayDto) {
-    return 'This action adds a new typeDisplay';
+  constructor(private prisma: PrismaService) {}
+
+  async create({ tipoExibicao }: CreateTypeDisplayDto): Promise<TypeDisplay> {
+    return await this.prisma.typeDisplay.create({
+      data: {
+        tipo_exibicao: tipoExibicao,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all typeDisplay`;
+  async update(
+    id: number,
+    { tipoExibicao }: UpdateTypeDisplayDto,
+  ): Promise<TypeDisplay> {
+    return await this.prisma.typeDisplay.update({
+      where: { id: id },
+      data: {
+        tipo_exibicao: tipoExibicao,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} typeDisplay`;
-  }
-
-  update(id: number, updateTypeDisplayDto: UpdateTypeDisplayDto) {
-    return `This action updates a #${id} typeDisplay`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} typeDisplay`;
+  async remove(id: number): Promise<TypeDisplay> {
+    return await this.prisma.typeDisplay.delete({ where: { id: id } });
   }
 }

@@ -12,23 +12,13 @@ export class TypeRaffleController {
     return this.typeRaffleService.create(createTypeRaffleDto);
   }
 
-  @Get()
-  findAll() {
-    return this.typeRaffleService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.typeRaffleService.findOne(+id);
-  }
-
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTypeRaffleDto: UpdateTypeRaffleDto) {
-    return this.typeRaffleService.update(+id, updateTypeRaffleDto);
+  update(@Param('id') id: number, @Body() updateTypeRaffleDto: UpdateTypeRaffleDto) {
+    return this.typeRaffleService.update(id, updateTypeRaffleDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.typeRaffleService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.typeRaffleService.remove(id);
   }
 }

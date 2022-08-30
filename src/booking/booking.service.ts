@@ -6,29 +6,31 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 
 @Injectable()
 export class BookingService {
-  constructor( private prisma:PrismaService){}
-  
- async create({requisitos_reserva}: CreateBookingDto):Promise<BookingRequirements> {
+  constructor(private prisma: PrismaService) {}
+
+  async create({
+    requisitos_reserva,
+  }: CreateBookingDto): Promise<BookingRequirements> {
     return this.prisma.bookingRequirements.create({
-      data:{
-        requisitos_reserva: requisitos_reserva
-      }
+      data: {
+        requisitos_reserva: requisitos_reserva,
+      },
     });
   }
 
-  findAll() {
-    return `This action returns all booking`;
+  async update(
+    id: number,
+    { requisitos_reserva }: UpdateBookingDto,
+  ): Promise<BookingRequirements> {
+    return await this.prisma.bookingRequirements.update({
+      where: { id: id },
+      data: {
+        requisitos_reserva: requisitos_reserva,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
-  }
-
-  update(id: number, updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} booking`;
+  async remove(id: number): Promise<BookingRequirements> {
+    return await this.prisma.bookingRequirements.delete({ where: { id: id } });
   }
 }
